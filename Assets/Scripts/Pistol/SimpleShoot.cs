@@ -26,13 +26,14 @@ public class SimpleShoot : MonoBehaviour
     public AudioClip reload;
     public AudioClip noAmmo;
     public Magazine magazine;
+
     public XRBaseInteractor socketInteractor;
     private bool hasSlide = true;
 
     public void AddMagazine(XRBaseInteractable interactable){
         magazine = interactable.GetComponent<Magazine>();
         source.PlayOneShot(reload);
-        hasSlide = false;
+        //hasSlide = false;
     }
     public void RemoveMagazine(XRBaseInteractable interactable){
         magazine = null;
@@ -40,9 +41,8 @@ public class SimpleShoot : MonoBehaviour
     }
 
     public void Slide(){
-        hasSlide = true;
         source.PlayOneShot(reload);
-        if(magazine.numBullets > 0 ){
+        if(magazine.numBullets > 0 && hasSlide){
             magazine.numBullets--;
             GameObject tempCasing;
             tempCasing = Instantiate(bulletPrefab, casingExitLocation.position, casingExitLocation.rotation) as GameObject;
@@ -54,6 +54,10 @@ public class SimpleShoot : MonoBehaviour
             //Destroy casing after X seconds
             Destroy(tempCasing, destroyTimer);
         }
+        else if (magazine.numBullets > 0 && hasSlide == false){
+            hasSlide = true; 
+        }
+
     }
 
     void Start()
@@ -73,6 +77,7 @@ public class SimpleShoot : MonoBehaviour
             gunAnimator.SetTrigger("Fire");
         } else{
             source.PlayOneShot(noAmmo);
+            hasSlide = false;
         }
             
     }
