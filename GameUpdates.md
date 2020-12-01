@@ -1,4 +1,3 @@
-
 # Game Updates
 
 ## 1st November -> 17th November
