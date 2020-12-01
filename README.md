@@ -4,7 +4,7 @@ INSERT DESCRIPTION
 
 ## Playing the game
 
-1) Download the [Build File](https://drive.google.com/file/d/1tazzXU-sZZBERR0qx_lgwjCTWSbt-SJm/view?usp=sharing) from my google Drive.
+1) Download the [Build File](https://drive.google.com/drive/folders/1IzCjlvNQo6GwGYZupIl3KmZLyO2VG5MK?usp=sharing) from my google Drive.
 2) Run 'Build.exe' to play the game.
 3) Enjoy!
 
