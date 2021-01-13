@@ -15,7 +15,10 @@ public class ContinuousMovement : MonoBehaviour
     private XRRig rig;
     private Vector2 inputAxis;
     private CharacterController character;
-    
+    public Rigidbody rigidbody;
+    public int forceConst = 50;
+    private bool canJump;
+    private InputDevice device;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +30,7 @@ public class ContinuousMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
+        device = InputDevices.GetDeviceAtXRNode(inputSource);
         device.TryGetFeatureValue(CommonUsages.primary2DAxis,out inputAxis);
     }
 
@@ -40,8 +43,12 @@ public class ContinuousMovement : MonoBehaviour
         Vector3 direction = headYaw * new Vector3(inputAxis.x,0,inputAxis.y);
         character.Move(direction * Time.fixedDeltaTime * speed);
 
-        //gravity
-        /*
+        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonValue))
+        {   
+            if(buttonValue){jump();}           
+        }
+        
+        /*gravity
         * When falling you dont fall at a constant speed,
         * it increases over time. 
         *Therefore the falling speed is 0 unless falling.
@@ -54,6 +61,14 @@ public class ContinuousMovement : MonoBehaviour
         
         character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);
 
+    }
+
+    void jump(){
+        bool isGrounded = CheckIfGrounded();
+        if(isGrounded){          
+            rigidbody.AddForce(0, forceConst, 0, ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
 
     void capsuleFollowHeadset(){

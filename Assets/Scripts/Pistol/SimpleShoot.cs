@@ -17,7 +17,7 @@ public class SimpleShoot : MonoBehaviour
     [SerializeField] private Transform casingExitLocation;
 
     [Header("Settings")]
-    [SerializeField] private float destroyTimer = 1f;
+    [SerializeField] private float destroyTimer = 3f;
     [SerializeField] private float shotPower = 5000f;
     [SerializeField] private float ejectPower = 150f;
 
@@ -28,7 +28,7 @@ public class SimpleShoot : MonoBehaviour
     public Magazine magazine;
 
     public XRBaseInteractor socketInteractor;
-    private bool hasSlide = true;
+    private bool hasSlide = false;
 
     public void AddMagazine(XRBaseInteractable interactable){
         magazine = interactable.GetComponent<Magazine>();

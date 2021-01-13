@@ -101,17 +101,26 @@ public class EnemyAi : MonoBehaviour
 
             if (!playerInSightRange && !playerInAttackRange){
                 anim.SetBool("playerFound", false);
-                Patroling();//Patrols and searches for player
-            }
-            
+                anim.SetBool("attack", false); 
+                
+                float distance = Vector3.Distance(player.transform.position, this.transform.position);
 
-            if (playerInSightRange && !playerInAttackRange){
+                if(distance > 200){
+                    Debug.Log("PLAYER OUT OF RANGE : Deleting...");
+                    Destroy(gameObject);
+                }
+
+                Patroling();//Patrols and searches for player
+            }else if (playerInSightRange && !playerInAttackRange){
+                anim.SetBool("attack", false); 
                 anim.SetBool("playerFound", true);
                 ChasePlayer();//Chases the player
-            }
-
-            if (playerInAttackRange && playerInSightRange){            
+            }else if (playerInAttackRange && playerInSightRange){        
+                anim.SetBool("attack", true);    
                 AttackPlayer();//Within range attack the player
+            }else{
+                anim.SetBool("attack", false); 
+                anim.SetBool("playerFound", false);
             }
         }
 
@@ -156,8 +165,7 @@ public class EnemyAi : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            playerManager.TakeDamage(100);
-            anim.SetTrigger("attack");
+            playerManager.TakeDamage(100);          
             ///Attack code here
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);

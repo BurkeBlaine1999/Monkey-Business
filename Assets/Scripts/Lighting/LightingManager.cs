@@ -13,7 +13,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField]private Light DirectionalLight;
     [SerializeField]private LightingPreset Preset;
     //Variables
-    [SerializeField,Range(0,900)]private float TimeOfDay;
+    [Range(0,900)]public float TimeOfDay;
 
     private void Update(){
         if(Preset == null){return;}
