@@ -1,5 +1,7 @@
 # Monkey Business
 
+![Monkey Business](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/Assets/Resources/MonkeyBusiness2.1.png?raw=true )
+
 Monkey Business is a virtual reality game featuring currently two different gamemodes, climbing and zombie survival.
 In the climbing game mode the player must run and climb to the end buzzer as fast as possible in an attempt to beat and set the highscore! In zombie survival the player must face endless waves of zombies and attempt to survive while also getting as many kills possible!
 
