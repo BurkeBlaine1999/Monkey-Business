@@ -1,12 +1,17 @@
-# NAME TO BE DECIDED
+# Xylophobia
 
-INSERT DESCRIPTION
+Xylophobia is a survival zombie virtual reality game created using Unity. I am creating this as my college final year project as I have an interest in virtual reality and game development. The game at the current time is in early access.
+
+The goal is to survive over night in a zombie filled forest but beware, being away from light will cause you to become distorted due to the characters irrational fear of forests at night. You must search to find items that can help you to survive such as a pistol, ammunition or a flash light.
+
+For information on updates, please click [here](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/GameUpdates.md).
 
 ## Playing the game
 
-1) Download the [Build File](https://drive.google.com/file/d/1TnT9TP5LmnIOo64XChFHPB6nUnuUDqIT/view?usp=sharing) from my google Drive.
-2) Run 'Build.exe' to play the game.
-3) Enjoy!
+1) Download the [Build File](https://drive.google.com/file/d/1SbXX_KgFAcwsRRc37YQQm4BYp44vZpO8/view?usp=sharing) from my google Drive.
+2) Ensure your virtual reality device is connected properly and allows unknown sources.
+3) Run 'Build.exe' to play the game.
+4) Enjoy!
 
 ## Looking at the game files
 
