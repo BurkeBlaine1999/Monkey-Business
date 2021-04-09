@@ -3,22 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class MainMenu : MonoBehaviour{
-    //public Text highScoreText;
 
-    // Start is called before the first frame update
-    void Start()
+
+public class MainMenu : MonoBehaviour
+{
+    public void ToMainMenu(){
+        SceneManager.LoadScene("Home");
+    }
+
+    public void ToZombieLevel(){
+        SceneManager.LoadScene("SeaTown");
+    }   
+
+    public void ToPracticeLevel(){
+        SceneManager.LoadScene("Practice");
+    }   
+
+    public void ToLevel1(){
+        SceneManager.LoadScene("Level One");
+    }   
+
+    public void ToLevel2(){
+        SceneManager.LoadScene("Level Two");
+    }   
+
+    public void ToLevel3(){
+        SceneManager.LoadScene("Level Three");
+    }  
+
+    public void Quit(){
+        Application.Quit();
+    }   
+
+    public void MenuOff()
     {
-       // highScoreText.text = "Highscore : " + ((int)PlayerPrefs.GetFloat("Highscore")).ToString();       
+        gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MenuOn()
     {
-        
+        gameObject.SetActive(true);
     }
-
-    public void ToGame(){
-        SceneManager.LoadScene("Level1");
-    }
+    
 }

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
-using UnityEngine.UI;
-public class EnemyAi : MonoBehaviour
+
+public class ThrowerEnemyAi : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
@@ -21,12 +22,8 @@ public class EnemyAi : MonoBehaviour
     public GameObject projectile;
 
     [SerializeField] private Animator anim;
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip BulletHit;
-    public Rigidbody rb;
 
-    [SerializeField] private GameObject Mag;
-    [SerializeField] private Transform MagSpawn;
+    public Rigidbody rb;
 
     //States
     public float sightRange, attackRange;
@@ -46,7 +43,6 @@ public class EnemyAi : MonoBehaviour
         SetRagdollParts();
         player = GameObject.Find("Vr Rig").transform;
         agent = GetComponent<NavMeshAgent>();
-        playerManager = GameObject.Find("Vr Rig").GetComponent<PlayerManager>();
         alive = true;
     }
 
@@ -81,15 +77,25 @@ public class EnemyAi : MonoBehaviour
 
     void start(){
         anim = gameObject.GetComponent<Animator>();
+        StartCoroutine(RunningSFX());
     }
 
+    IEnumerator RunningSFX()
+    {
+        Debug.Log("Sound Playing");
+        yield return new WaitForSeconds(0.4f); 
+        audioSource.PlayOneShot(rightStep);             
+        yield return new WaitForSeconds(0.4f);             
+        audioSource.PlayOneShot(leftStep);  
+        
+    }
     private void Update()
     {   
         //If the zombie is alive ...
         if(alive){
             //Check for sight and attack range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange + 2, whatIsPlayer);
 
             if (!playerInSightRange && !playerInAttackRange){
                 anim.SetBool("playerFound", false);
@@ -151,22 +157,23 @@ public class EnemyAi : MonoBehaviour
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
-        //agent.SetDestination(transform.position);
+        agent.SetDestination(transform.position);
 
-        float dist = Vector3.Distance(gameObject.transform.position, player.position);
+        transform.LookAt(player);
 
-        if(dist < 1f){
-            //transform.LookAt(player);
-
-            if (!alreadyAttacked)
-            {
-                playerManager.TakeDamage(10);  
-                alreadyAttacked = true;
-                Invoke(nameof(ResetAttack), timeBetweenAttacks);
-            }
+        if (!alreadyAttacked)
+        {
+            playerManager.TakeDamage(10);          
+            ///Attack code here
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            ///End of attack code
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-
     }
+    
     private void ResetAttack()
     {
         alreadyAttacked = false;
@@ -175,7 +182,6 @@ public class EnemyAi : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Bullet"){
-            Destroy(collision.gameObject);
             TakeDamage(35);
         }
     }
@@ -184,10 +190,8 @@ public class EnemyAi : MonoBehaviour
     {
         health -= damage;
         Debug.Log(" ZOMBIE HEALTH =" + health);
-        source.PlayOneShot(BulletHit);
 
         if (health <= 0){
-            playerManager.killCounter();
             rb.AddForce(Vector3.zero);
             rb.AddForce(100f * Vector3.up);           
             alive = false;
@@ -197,7 +201,6 @@ public class EnemyAi : MonoBehaviour
     }
     private void DestroyEnemy()
     {
-        Instantiate(Mag, MagSpawn.position, transform.rotation);
         Destroy(gameObject);
     }
 

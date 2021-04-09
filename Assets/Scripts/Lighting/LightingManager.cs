@@ -12,6 +12,7 @@ public class LightingManager : MonoBehaviour
     //References
     [SerializeField]private Light DirectionalLight;
     [SerializeField]private LightingPreset Preset;
+
     //Variables
     [Range(0,900)]public float TimeOfDay;
 

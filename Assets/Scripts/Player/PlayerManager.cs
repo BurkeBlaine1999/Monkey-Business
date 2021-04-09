@@ -1,19 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerManager : MonoBehaviour
 {
     #region Singleton
 
     public static PlayerManager instance;
 
-    public LightingManager lightingManager;
-
-    public AudioSource AudioSource;
-
-    public AudioClip daySound;
-    public AudioClip nightSound;
+    [SerializeField] private Text text;
 
     void Awake(){
         instance = this;
@@ -23,63 +18,82 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject player;
     private int health = 100;
+
+    [SerializeField]private GameObject deathMenu;
+    [SerializeField]private GameObject Menu;
+
+    [SerializeField]private AudioSource audioSource;
+    [SerializeField]private AudioClip hurt1;
+    [SerializeField]private AudioClip hurt2;
+    [SerializeField] private Text killCount;
+
+    [SerializeField]private GameObject newHighscore;
+    string highscore = "SeaTown";
+    private int kills=0;
     void Start(){
         //AudioSource.Play();
+        text.text = health.ToString();
+        text.color = Color.green;
+        health = 100;
     }
 
-    // void Update(){
-    //     if(lightingManager.TimeOfDay < 175 || lightingManager.TimeOfDay > 775){
-    //         FadeOut(AudioSource,10f);
-    //         AudioSource.clip = null;
-    //     }else{
-    //         FadeOut(AudioSource,10f);
-    //         AudioSource.Play();
-    //     }
-    // }
+    void Update(){
+        text.text = health.ToString();
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Bullet"){
-            TakeDamage(35);
+        if(collision.gameObject.tag == "Slime Ball"){
+            TakeDamage(15);
+            Destroy(collision.gameObject);
         }
     }
 
-    public void TakeDamage(int damage)
-    {
+    public void TakeDamage(int damage){
+
+        int randNum = Random.Range(1, 2);
+
+       if(randNum == 1){
+           audioSource.PlayOneShot(hurt1);
+       }else{
+            audioSource.PlayOneShot(hurt2);
+       }
+
         health -= damage;
+        text.text = health.ToString();
+
+        if(health >70){text.color = Color.green;}
+        else if(health < 70 && health > 40){text.color = Color.yellow;}
+        else if(health < 40){text.color = Color.red;}
+        else{text.color = Color.black;}
+
+        Debug.Log("PLAYER HEALTH = " + health);
         if(health <= 0){
+            text.text = "0";
             Death();
         }
         return;
     }
 
     private void Death(){
+        if(kills > PlayerPrefs.GetInt(highscore)){           
+            PlayerPrefs.SetInt(highscore,kills);
+            newHighscore.SetActive(true);
+        }
+
         Debug.Log("YOU ARE DEAD!");
-        Destroy(player.gameObject);
+        deathMenu.SetActive(true);
+        Menu.SetActive(false);
+        Time.timeScale = 0f;
+    
     }
 
-    private void changeAudio(){
-
+    public void killCounter(){
+        kills++;
+        killCount.text = kills.ToString();
     }
 
-    // public IEnumerator PlayAudio (AudioSource audioSource) {
-        
-    //     audioSource.clip = daySound;
-    //     audioSource.Play ();
-    //     double x = audioSource.clip.length;     
-    //     yield return WaitForSeconds (3); 
-    // }
 
-    // public static IEnumerator FadeOut (AudioSource audioSource, float FadeTime) {
-    //     float startVolume = audioSource.volume;
- 
-    //     while (audioSource.volume > 0) {
-    //         audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
- 
-    //         yield return null;
-    //     }
- 
-    //     audioSource.Stop ();
-    //     audioSource.volume = startVolume;
-    // }
+
 }

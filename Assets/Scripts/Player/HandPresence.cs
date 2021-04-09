@@ -24,7 +24,6 @@ public class HandPresence : MonoBehaviour
         InputDevices.GetDevicesWithCharacteristics(controllerCharacteristics,devices);
 
         foreach(var item in devices){
-            Debug.Log(item.name + item.characteristics);
         }
 
         if(devices.Count > 0){
@@ -40,19 +39,16 @@ public class HandPresence : MonoBehaviour
     void UpdateHandAnimation(){
         if(targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue)){
             handAnimator.SetFloat("Trigger",triggerValue);
-            Debug.Log(triggerValue);
         }
         else{
-            handAnimator.SetFloat("Trigger",0);
+            //handAnimator.SetFloat("Trigger",0);
         }
 
         if(targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue)){
             handAnimator.SetFloat("Grip",gripValue);
-            
-            Debug.Log(gripValue);
         }
         else{
-            handAnimator.SetFloat("Grip",0);
+            //handAnimator.SetFloat("Grip",0);
         }
     }
 

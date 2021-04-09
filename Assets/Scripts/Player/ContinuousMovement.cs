@@ -37,6 +37,8 @@ public class ContinuousMovement : MonoBehaviour
     private void FixedUpdate()
     {
 
+        //Debug.Log(fallingSpeed);
+
         capsuleFollowHeadset();
 
         Quaternion headYaw = Quaternion.Euler(0,rig.cameraGameObject.transform.eulerAngles.y,0);
