@@ -1,8 +1,7 @@
-# Xylophobia
+# Monkey Business
 
-Xylophobia is a survival zombie virtual reality game created using Unity. I am creating this as my college final year project as I have an interest in virtual reality and game development. The game at the current time is in early access.
-
-The goal is to survive over night in a zombie filled forest but beware, being away from light will cause you to become distorted due to the characters irrational fear of forests at night. You must search to find items that can help you to survive such as a pistol, ammunition or a flash light.
+Monkey Business is a virtual reality game featuring currently two different gamemodes, climbing and zombie survival.
+In the climbing game mode the player must run and climb to the end buzzer as fast as possible in an attempt to beat and set the highscore! In zombie survival the player must face endless waves of zombies and attempt to survive while also getting as many kills possible!
 
 For information on updates, please click [here](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/GameUpdates.md).
 
@@ -25,6 +24,8 @@ For information on updates, please click [here](https://github.com/BurkeBlaine19
 
 [Unity Hub](https://unity3d.com/get-unity/download)
 
+[An Oculus Headet](https://www.oculus.com/quest-2/)
+
 ## Built With
 
 [Unity 2019-3](https://unity.com/releases/2019-3)
@@ -33,7 +34,7 @@ For information on updates, please click [here](https://github.com/BurkeBlaine19
 
 ## Versioning
 
-Version 1.0
+Version 1.3
 
 ## Authors
 
@@ -48,6 +49,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 * [Geeks for geeks](https://www.geeksforgeeks.org/) - Helped with debugging 
 * [Stack Overflow](https://stackoverflow.com/) - Helped with debugging 
 * [Valem](https://www.youtube.com/channel/UCPJlesN59MzHPPCp0Lg8sLw) - Helped with several aspects through his tutorials! 
-* [SoundImage.org](http://soundimage.org/) - Provided me with my sound effects and music! 
-
+* [SoundImage.org](http://soundimage.org/) - Provided me with some of my sound effects and music! 
+* [Zapsplat](https://www.zapsplat.com/) - Provided me with some of my sound effects and music! 
 
