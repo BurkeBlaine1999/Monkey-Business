@@ -9,14 +9,14 @@ For information on updates, please click [here](https://github.com/BurkeBlaine19
 
 ## Playing the game
 
-1) Download the [Build File](https://drive.google.com/file/d/1hsVpUsfncC1pP3h0EU7GRSfeL_vMMEo8/view?usp=sharing) from my google Drive.
+1) Download the [Build File](https://drive.google.com/file/d/11YudHE_fH6jEXgMZ8Z6cuuxaA4dPUYJq/view?usp=sharing) from my google Drive.
 2) Ensure your virtual reality device is connected properly and allows unknown sources.
 3) Run 'Build.exe' to play the game.
 4) Enjoy!
 
 ## Looking at the game files
 
-1. Go to the [Package Folder](Link) and download 'Package.unitypackage'
+1. Download the [Package](https://drive.google.com/file/d/1eJRZ-V7ThlLdG8DRtKSSzb_M8RiYCWab/view?usp=sharing).
   
 2. Import into a unity project either by dragging it into it or importing it!
 
@@ -27,6 +27,8 @@ For information on updates, please click [here](https://github.com/BurkeBlaine19
 [Unity Hub](https://unity3d.com/get-unity/download)
 
 [An Oculus Headet](https://www.oculus.com/quest-2/)
+
+[Xr Development Toolkit](https://docs.unity3d.com/Manual/com.unity.xr.interaction.toolkit.html)
 
 ## Built With
 
