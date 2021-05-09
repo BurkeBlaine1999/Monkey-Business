@@ -7,34 +7,31 @@ In the climbing game mode the player must run and climb to the end buzzer as fas
 
 For information on updates, please click [here](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/GameUpdates.md).
 
-## Playing the game
+## Playing the game.
 
 1) Download the [Build File](https://drive.google.com/file/d/11YudHE_fH6jEXgMZ8Z6cuuxaA4dPUYJq/view?usp=sharing) from my google Drive.
 2) Ensure your virtual reality device is connected properly and allows unknown sources.
 3) Run 'Build.exe' to play the game.
 4) Enjoy!
 
-## Looking at the game files
+## Installing the package.
 
 1. Download the [Package](https://drive.google.com/file/d/1eJRZ-V7ThlLdG8DRtKSSzb_M8RiYCWab/view?usp=sharing).
-  
-2. Import into a unity project either by dragging it into it or importing it!
+2. Unzip the downloaded file.
+3. Import the package into a unity project either by dragging it into the editor or importing it!
+4. Download and install XR Development Toolkit version 0.9.4 from Unity's package manager.
 
 ## Prerequisites
 
-[Unity 2019-3](https://unity.com/releases/2019-3)
-
-[Unity Hub](https://unity3d.com/get-unity/download)
-
-[An Oculus Headet](https://www.oculus.com/quest-2/)
-
-[Xr Development Toolkit](https://docs.unity3d.com/Manual/com.unity.xr.interaction.toolkit.html)
+* [Unity 2019-3](https://unity.com/releases/2019-3)
+* [Unity Hub](https://unity3d.com/get-unity/download)
+* [An Oculus Headet](https://www.oculus.com/quest-2/)
+* [Xr Development Toolkit](https://docs.unity3d.com/Manual/com.unity.xr.interaction.toolkit.html)
 
 ## Built With
 
-[Unity 2019-3](https://unity.com/releases/2019-3)
-
-[Unity Hub](https://unity3d.com/get-unity/download)
+* [Unity 2019-3](https://unity.com/releases/2019-3)
+* [Unity Hub](https://unity3d.com/get-unity/download)
 
 ## Versioning
 
@@ -46,7 +43,7 @@ Version 1.3
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/BurkeBlaine1999/Final-Year-Project/blob/main/LICENSE) file for details.
 
 ## Acknowledgments
 
