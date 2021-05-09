@@ -6,15 +6,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]private AudioSource audioSource;
-    [SerializeField]private AudioClip clip1;
-    [SerializeField]private AudioClip clip2;
 
-    
     [SerializeField]private AudioClip grabClip1;
     [SerializeField]private AudioClip grabClip2;
     [SerializeField]private AudioClip grabClip3;
     [SerializeField]private AudioClip grabClip4;
-    public LightingManager lightingManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,17 +21,6 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         audioSource.Play();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(lightingManager.TimeOfDay < 200 || lightingManager.TimeOfDay > 700){
-            audioSource.clip=clip1;
-        }
-        else{
-            audioSource.clip=clip2;
-        }      
     }
 
         public void playRandomSound(){

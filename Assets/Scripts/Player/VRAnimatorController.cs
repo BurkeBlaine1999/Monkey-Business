@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class VRAnimatorController : MonoBehaviour
 {
-    public float speedThreshold =0.1f;
+    public float speedThreshold = 0.1f;
 
-    [Range(0,1)]
-    public float smoothing =0.3f;
+    [Range(0, 1)]
+    public float smoothing = 0.3f;
 
     private Animator animator;
     private Vector3 previousPos;
@@ -33,9 +33,9 @@ public class VRAnimatorController : MonoBehaviour
         float previousDirectionX = animator.GetFloat("DirectionX");
         float previousDirectionY = animator.GetFloat("DirectionY");
 
-        animator.SetBool("isMoving",headsetLocalSpeed.magnitude > speedThreshold);
-        animator.SetFloat("DirectionX",Mathf.Lerp(previousDirectionX, Mathf.Clamp(headsetLocalSpeed.x,-1,1),smoothing));
-        animator.SetFloat("DirectionY",Mathf.Lerp(previousDirectionY, Mathf.Clamp(headsetLocalSpeed.z,-1,1),smoothing));
+        animator.SetBool("isMoving", headsetLocalSpeed.magnitude > speedThreshold);
+        animator.SetFloat("DirectionX", Mathf.Lerp(previousDirectionX, Mathf.Clamp(headsetLocalSpeed.x, -1, 1), smoothing));
+        animator.SetFloat("DirectionY", Mathf.Lerp(previousDirectionY, Mathf.Clamp(headsetLocalSpeed.z, -1, 1), smoothing));
 
     }
 }

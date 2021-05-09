@@ -7,18 +7,12 @@ public class EnemyAi : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatIsGround, whatIsPlayer;
-    public float health=50;
-
-    //Patroling
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
+    public LayerMask whatIsPlayer;
+    public float health = 50;
 
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
 
     [SerializeField] private Animator anim;
     [SerializeField] private AudioSource source;
@@ -30,16 +24,14 @@ public class EnemyAi : MonoBehaviour
 
     //States
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public bool playerInAttackRange;
     public PlayerManager playerManager;
 
     public List<Collider> RagdollParts = new List<Collider>();
 
     bool alive;
 
-    public AudioSource audioSource;
-    public AudioClip rightStep;
-    public AudioClip leftStep;
+    [SerializeField]private float yMin ,yMax;
 
     private void Awake()
     {
@@ -50,97 +42,67 @@ public class EnemyAi : MonoBehaviour
         alive = true;
     }
 
-    private void SetRagdollParts(){
+    private void SetRagdollParts()
+    {
         Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
 
-        foreach(Collider c in colliders){
-
-            if(c.gameObject != this.gameObject){
+        foreach (Collider c in colliders)
+        {
+            if (c.gameObject != this.gameObject)
+            {
                 c.isTrigger = true;
                 RagdollParts.Add(c);
             }
-            
+
         }
     }
 
-    private void TurnOnRagdoll(){
-        
+    private void TurnOnRagdoll()
+    {
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         anim.enabled = false;
         anim.avatar = null;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
-        
-        foreach(Collider c in RagdollParts){
-    
+
+        foreach (Collider c in RagdollParts)
+        {
             c.isTrigger = false;
             c.attachedRigidbody.velocity = Vector3.zero;
-            
         }
     }
 
-    void start(){
+    void start()
+    {
         anim = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
-    {   
+    {
+
+        transform.position = new Vector3(transform.position.x,
+        Mathf.Clamp(transform.position.y,yMin,yMax),transform.position.z);
+
         //If the zombie is alive ...
-        if(alive){
-            //Check for sight and attack range
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (alive)
+        {
+            ChasePlayer();
 
-            if (!playerInSightRange && !playerInAttackRange){
-                anim.SetBool("playerFound", false);
-                anim.SetBool("attack", false); 
-                
-                float distance = Vector3.Distance(player.transform.position, this.transform.position);
+            //playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            float distance = Vector3.Distance(player.transform.position, this.transform.position);
 
-                if(distance > 100){
-                    Debug.Log("PLAYER OUT OF RANGE : Deleting...");
-                    Destroy(gameObject);
-                }
-
-                Patroling();//Patrols and searches for player
-            }else if (playerInSightRange && !playerInAttackRange){
-                anim.SetBool("attack", false); 
-                anim.SetBool("playerFound", true);
-                ChasePlayer();//Chases the player
-            }else if (playerInAttackRange){        
-                anim.SetBool("attack", true);    
+            if (distance <= 1)
+            {
+                Debug.Log("ATTACKING PLAYER");
+                anim.SetBool("attack", true);
                 AttackPlayer();//Within range attack the player
-            }else{
-                anim.SetBool("attack", false); 
-                anim.SetBool("playerFound", false);
+            }
+            else
+            {
+                anim.SetBool("attack", false);
             }
         }
 
-    }
-
-    private void Patroling()
-    {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet)
-            agent.SetDestination(player.position);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
-    }
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
     }
 
     private void ChasePlayer()
@@ -151,16 +113,17 @@ public class EnemyAi : MonoBehaviour
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
-        //agent.SetDestination(transform.position);
+        agent.SetDestination(transform.position);
 
         float dist = Vector3.Distance(gameObject.transform.position, player.position);
 
-        if(dist < 1f){
+        if (dist < 1f)
+        {
             //transform.LookAt(player);
 
             if (!alreadyAttacked)
             {
-                playerManager.TakeDamage(10);  
+                playerManager.TakeDamage(10);
                 alreadyAttacked = true;
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);
             }
@@ -174,7 +137,8 @@ public class EnemyAi : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Bullet"){
+        if (collision.gameObject.tag == "Bullet")
+        {
             Destroy(collision.gameObject);
             TakeDamage(35);
         }
@@ -186,10 +150,11 @@ public class EnemyAi : MonoBehaviour
         Debug.Log(" ZOMBIE HEALTH =" + health);
         source.PlayOneShot(BulletHit);
 
-        if (health <= 0){
+        if (health <= 0)
+        {
             playerManager.killCounter();
             rb.AddForce(Vector3.zero);
-            rb.AddForce(100f * Vector3.up);           
+            rb.AddForce(100f * Vector3.up);
             alive = false;
             TurnOnRagdoll();
             Invoke(nameof(DestroyEnemy), 5f);

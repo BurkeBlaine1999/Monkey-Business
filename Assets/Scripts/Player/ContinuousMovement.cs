@@ -10,7 +10,7 @@ public class ContinuousMovement : MonoBehaviour
     private float speed = 5.0f;
     public LayerMask groundLayer;
     public float additionalHeight = 0.2f;
-    private float fallingSpeed ;
+    private float fallingSpeed;
     private float gravity = -9.81f;
     private XRRig rig;
     private Vector2 inputAxis;
@@ -30,59 +30,63 @@ public class ContinuousMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Display average FPS on console
+        //Debug.Log("AVERAGE FPS " + 1/Time.deltaTime);
         device = InputDevices.GetDeviceAtXRNode(inputSource);
-        device.TryGetFeatureValue(CommonUsages.primary2DAxis,out inputAxis);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out inputAxis);
     }
 
     private void FixedUpdate()
     {
 
-        //Debug.Log(fallingSpeed);
-
         capsuleFollowHeadset();
 
-        Quaternion headYaw = Quaternion.Euler(0,rig.cameraGameObject.transform.eulerAngles.y,0);
-        Vector3 direction = headYaw * new Vector3(inputAxis.x,0,inputAxis.y);
+        Quaternion headYaw = Quaternion.Euler(0, rig.cameraGameObject.transform.eulerAngles.y, 0);
+        Vector3 direction = headYaw * new Vector3(inputAxis.x, 0, inputAxis.y);
         character.Move(direction * Time.fixedDeltaTime * speed);
 
         if (device.TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonValue))
-        {   
-            if(buttonValue){jump();}           
+        {
+            if (buttonValue) { jump(); }
         }
-        
+
         /*gravity
         * When falling you dont fall at a constant speed,
         * it increases over time. 
-        *Therefore the falling speed is 0 unless falling.
+        * Therefore the falling speed is 0 unless falling.
         */
         bool isGrounded = CheckIfGrounded();
-        if(isGrounded)
+        if (isGrounded)
             fallingSpeed = 0;
-        else 
+        else
             fallingSpeed += gravity * Time.fixedDeltaTime;
-        
+
         character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);
 
     }
 
-    void jump(){
+    void jump()
+    {
         bool isGrounded = CheckIfGrounded();
-        if(isGrounded){          
+        if (isGrounded)
+        {
             rigidbody.AddForce(0, forceConst, 0, ForceMode.Impulse);
             isGrounded = false;
         }
     }
 
-    void capsuleFollowHeadset(){
+    void capsuleFollowHeadset()
+    {
         character.height = rig.cameraInRigSpaceHeight + additionalHeight;
         Vector3 capsuleCenter = transform.InverseTransformPoint(rig.cameraGameObject.transform.position);
-        character.center = new Vector3(capsuleCenter.x, character.height/2 + character.skinWidth , capsuleCenter.z);
+        character.center = new Vector3(capsuleCenter.x, character.height / 2 + character.skinWidth, capsuleCenter.z);
     }
 
-    bool CheckIfGrounded(){
+    bool CheckIfGrounded()
+    {
         Vector3 rayStart = transform.TransformPoint(character.center);
         float rayLength = character.center.y + 0.01f;
-        bool hasHit = Physics.SphereCast(rayStart,character.radius,Vector3.down, out RaycastHit hitInfo, rayLength, groundLayer);
+        bool hasHit = Physics.SphereCast(rayStart, character.radius, Vector3.down, out RaycastHit hitInfo, rayLength, groundLayer);
         return hasHit;
     }
 }
