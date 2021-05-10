@@ -20,6 +20,10 @@ For information on updates, please click [here](https://github.com/BurkeBlaine19
 2. Unzip the downloaded file.
 3. Import the package into a unity project either by dragging it into the editor or importing it!
 4. Download and install XR Development Toolkit version 0.9.4 from Unity's package manager.
+5. 
+## Screencast Demonstration.
+[Click here for the screencast demonstration.](https://drive.google.com/file/d/1rfnRQGhhOUJi1SC8ptEKBud_B92fENb1/view?usp=sharing)
+
 
 ## Prerequisites
 
